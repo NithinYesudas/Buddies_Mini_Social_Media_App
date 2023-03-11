@@ -1,10 +1,13 @@
+import 'package:buddies/helpers/custom_route_animation.dart';
+import 'package:buddies/screens/auth/user_data_collection_screen.dart';
 import 'package:buddies/services/auth_services.dart';
 import 'package:buddies/utils/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 
-import '../helpers/auth/validators.dart';
+import '../../helpers/auth/validators.dart';
+
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -196,6 +199,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void newPage() {
-    Navigator.of(context).pushReplacementNamed("LoginScreen");
+    Navigator.pushReplacement(context, SlidePageRoute(page: UserDataCollection()));
   }
 }

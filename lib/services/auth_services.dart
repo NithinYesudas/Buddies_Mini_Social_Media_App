@@ -1,21 +1,24 @@
+import 'dart:io';
+
 import 'package:buddies/utils/accessory_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AuthServices {
-
-  static Future<bool> login(String email, String password,
-      BuildContext ctx) async {
+  static Future<bool> login(
+      String email, String password, BuildContext ctx) async {
+    // function for login
     bool isSuccessful = true;
     try {
       UserCredential userCredential =
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      // Do something with the userCredential
     } on FirebaseAuthException catch (e) {
       isSuccessful = false;
       String? message;
@@ -35,22 +38,62 @@ class AuthServices {
     return isSuccessful;
   }
 
-  static Future<bool> createAccount(String email, String password,BuildContext ctx) async {
-     bool isSuccessful = true;
+  static Future<bool> createAccount(
+      //for creating a new account
+      String email,
+      String password,
+      BuildContext ctx) async {
+    bool isSuccessful = true;
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: email, password: password);
-
-
-    }
-    on FirebaseAuthException catch(e){
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
       AccessoryWidgets.snackBar(e.code, ctx);
       isSuccessful = false;
-    }
-    catch(error){
+    } catch (error) {
       AccessoryWidgets.snackBar("An error occured", ctx);
       isSuccessful = false;
     }
+    return isSuccessful;
+  }
+
+  static Future<bool> uploadDetails(
+      File image, String name, String bio, BuildContext ctx) async {
+    //to upload user details to database
+    bool isSuccessful = true;
+    try {
+      final authRef = FirebaseAuth.instance;
+      String? uid = authRef.currentUser?.uid;
+      String? email = authRef.currentUser!.email;
+      final fireStoreRef = FirebaseFirestore.instance;
+      TaskSnapshot details = await FirebaseStorage.instance//upload image to storage
+          .ref()
+          .child("profileImages/$uid/$uid.jpg")
+          .putFile(image)
+          .whenComplete(() {});
+      if (details.state == TaskState.success) {
+        String imageUrl = await details.ref.getDownloadURL();//get image url from storage
+
+        await fireStoreRef.collection('users').doc(uid).set({
+          "uid": uid,
+          "email": email,
+          "name": name,
+          "bio": bio,
+          "imageUrl": imageUrl
+        });
+      }
+    } on FirebaseException catch (e) {
+      AccessoryWidgets.snackBar(
+          'FirebaseException while uploading file', ctx);
+      // Handle FirebaseException
+    } on IOException catch (e) {
+      AccessoryWidgets.snackBar('IOException while uploading file', ctx);
+      // Handle IOException
+    } catch (e) {
+      AccessoryWidgets.snackBar('An Unknown error occured', ctx);
+      // Handle other exceptions
+    }
+
     return isSuccessful;
   }
 }

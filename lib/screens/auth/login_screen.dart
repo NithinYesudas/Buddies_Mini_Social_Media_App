@@ -1,12 +1,17 @@
 import 'package:buddies/helpers/auth/validators.dart';
+import 'package:buddies/screens/auth/signup_screen.dart';
+
 import 'package:buddies/services/auth_services.dart';
 import 'package:buddies/utils/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 
+import '../../helpers/custom_route_animation.dart';
+import 'auth_pages.dart';
+
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -180,7 +185,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   TextButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed("SignUpScreen");
+                        Navigator.push(
+                          context,
+                          SlidePageRoute(page: const SignUpScreen()),
+                        );
                       },
                       child: Text(
                         "Sign-Up",
@@ -198,6 +206,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void newPage() {
-    Navigator.of(context).pushReplacementNamed("SignUpScreen");
+    Navigator.of(context).pushReplacementNamed("HomeScreen");
   }
 }
