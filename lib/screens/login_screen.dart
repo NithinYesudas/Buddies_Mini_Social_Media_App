@@ -5,11 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 
-class AuthScreen extends StatelessWidget {
-  AuthScreen({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+
+  final TextEditingController _emailController = TextEditingController();
+
+  final TextEditingController _passwordController = TextEditingController();
+
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -115,12 +125,23 @@ class AuthScreen extends StatelessWidget {
                         ),
                       ),
                       ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             bool? isValid = _formKey.currentState?.validate();
 
                             if (isValid!) {
-                              AuthServices.login(_emailController.text.trim(),
-                                  _passwordController.text.trim());
+                              setState(() {
+                                isLoading = true;
+                              });
+                              bool isSuccessful = await AuthServices.login(
+                                  _emailController.text.trim(),
+                                  _passwordController.text.trim(),
+                                  context);
+                              isLoading = false;
+                              if (!isSuccessful) {
+                                setState(() {});
+                              } else {
+                                newPage();
+                              }
                             }
                           },
                           style: ButtonStyle(
@@ -130,13 +151,18 @@ class AuthScreen extends StatelessWidget {
                                       vertical: mediaQuery.height * .015)),
                               backgroundColor: MaterialStateProperty.all(
                                   CustomColors.darkAccent)),
-                          child: Text(
-                            "Login",
-                            style: GoogleFonts.nunitoSans(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                fontSize: mediaQuery.width * .04),
-                          ))
+                          child: isLoading
+                              ? const CircularProgressIndicator(
+                                  strokeWidth: 1.5,
+                                  color: Colors.white,
+                                )
+                              : Text(
+                                  "Login",
+                                  style: GoogleFonts.nunitoSans(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: mediaQuery.width * .04),
+                                ))
                     ],
                   ),
                 )),
@@ -153,7 +179,9 @@ class AuthScreen extends StatelessWidget {
                     style: GoogleFonts.nunitoSans(),
                   ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed("SignUpScreen");
+                      },
                       child: Text(
                         "Sign-Up",
                         style: GoogleFonts.nunitoSans(
@@ -167,5 +195,9 @@ class AuthScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void newPage() {
+    Navigator.of(context).pushReplacementNamed("SignUpScreen");
   }
 }

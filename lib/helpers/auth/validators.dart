@@ -14,4 +14,15 @@ class AuthValidators {
       return null;
     }
   }
+  static String? confirmPasswordValidator(String password, String confirmPassword){
+    if(password.isEmpty || confirmPassword.isEmpty|| password.length<8){
+      return "Password is too short or empty";
+    }
+    else if(password != confirmPassword){
+      return "Passwords doesn't match";
+    }
+    else{
+      return null;
+    }
+  }
 }

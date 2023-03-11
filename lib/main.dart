@@ -1,6 +1,7 @@
+import 'package:buddies/screens/signup_screen.dart';
 import 'package:buddies/screens/splashScreen.dart';
 import 'package:buddies/utils/custom_colors.dart';
-import 'package:buddies/screens/auth_screen.dart';
+import 'package:buddies/screens/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,10 @@ class BuddiesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
 
+    routes: {
+      "SignUpScreen": (ctx)=>SignUpScreen(),
+      "LoginScreen": (ctx)=>LoginScreen()
+    },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
@@ -24,7 +29,7 @@ class BuddiesApp extends StatelessWidget {
         future: Firebase.initializeApp(),
         builder: (context,snapshot) {
           if(snapshot.connectionState == ConnectionState.done){
-            return AuthScreen();
+            return LoginScreen();
 
           }
           else{
