@@ -23,7 +23,7 @@ class BuddiesApp extends StatelessWidget {
       routes: {
         "SignUpScreen": (ctx) => const SignUpScreen(),
         "LoginScreen": (ctx) => const LoginScreen(),
-        "HomeScreen": (ctx) => const HomeScreen()
+        "HomeScreen": (ctx) =>  HomeScreen()
       },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -41,7 +41,7 @@ class BuddiesApp extends StatelessWidget {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const SplashScreen();
                     } else if (snapshot.hasData) {
-                      return const HomeScreen();
+                      return  HomeScreen();
                     } else {
                       return const AuthPages();
                     }
