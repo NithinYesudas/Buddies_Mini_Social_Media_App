@@ -219,6 +219,6 @@ class _UserDataCollectionState extends State<UserDataCollection> {
   }
 
   void nextPage() {
-    Navigator.of(context).pushReplacementNamed("HomeScreen");
+    Navigator.of(context).pushReplacementNamed("MainScreen");
   }
 }

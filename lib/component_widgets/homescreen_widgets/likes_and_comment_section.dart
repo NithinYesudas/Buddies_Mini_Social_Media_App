@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
-
 import '../../models/post_model.dart';
 
 class LikesAndCommentWidget extends StatefulWidget {
@@ -55,7 +54,7 @@ class _LikesAndCommentWidgetState extends State<LikesAndCommentWidget> {
                     icon: const Icon(Ionicons.bookmark_outline)),
                 const Expanded(child: SizedBox()),
                 Text(DateFormat.MMMd().format(widget.post.postTime),style: GoogleFonts.nunitoSans(fontWeight: FontWeight.w700),),
-                SizedBox(width: 10,)
+                const SizedBox(width: 10,)
 
               ],
             ),
@@ -96,7 +95,7 @@ class _LikesAndCommentWidgetState extends State<LikesAndCommentWidget> {
             child: Text(
               "Caption: ${widget.post.caption}",
               style: GoogleFonts.nunitoSans(
-                  color: Colors.black, fontWeight: FontWeight.w700),
+                  color: Colors.black, fontWeight: FontWeight.w600),
             ),
           )
         ],

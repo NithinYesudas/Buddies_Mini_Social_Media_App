@@ -150,6 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             }
                           },
                           style: ButtonStyle(
+
                               padding: MaterialStateProperty.all(
                                   EdgeInsets.symmetric(
                                       horizontal: mediaQuery.width * .125,
@@ -206,6 +207,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void newPage() {
-    Navigator.of(context).pushReplacementNamed("HomeScreen");
+    Navigator.of(context).pushReplacementNamed("MainScreen");
   }
 }
