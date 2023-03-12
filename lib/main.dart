@@ -2,6 +2,7 @@ import 'package:buddies/screens/auth/auth_pages.dart';
 import 'package:buddies/screens/auth/login_screen.dart';
 import 'package:buddies/screens/auth/signup_screen.dart';
 import 'package:buddies/screens/home_screen.dart';
+import 'package:buddies/screens/main_screen.dart';
 import 'package:buddies/screens/splashScreen.dart';
 import 'package:buddies/utils/custom_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,7 +24,8 @@ class BuddiesApp extends StatelessWidget {
       routes: {
         "SignUpScreen": (ctx) => const SignUpScreen(),
         "LoginScreen": (ctx) => const LoginScreen(),
-        "HomeScreen": (ctx) =>  HomeScreen()
+        "HomeScreen": (ctx) =>  HomeScreen(),
+        "MainScreen": (ctx)=> const MainScreen()
       },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -41,7 +43,7 @@ class BuddiesApp extends StatelessWidget {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const SplashScreen();
                     } else if (snapshot.hasData) {
-                      return  HomeScreen();
+                      return  const MainScreen();
                     } else {
                       return const AuthPages();
                     }

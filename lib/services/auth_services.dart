@@ -83,13 +83,16 @@ class AuthServices {
         });
       }
     } on FirebaseException catch (e) {
+      isSuccessful = false;
       AccessoryWidgets.snackBar(
           'FirebaseException while uploading file', ctx);
       // Handle FirebaseException
     } on IOException catch (e) {
+      isSuccessful = false;
       AccessoryWidgets.snackBar('IOException while uploading file', ctx);
       // Handle IOException
     } catch (e) {
+      isSuccessful = false;
       AccessoryWidgets.snackBar('An Unknown error occured', ctx);
       // Handle other exceptions
     }
