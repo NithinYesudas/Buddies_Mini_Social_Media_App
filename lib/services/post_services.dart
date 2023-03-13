@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,33 +8,37 @@ import 'package:uuid/uuid.dart';
 
 import '../utils/accessory_widgets.dart';
 
-class PostServices{
-  static Future<bool> uploadPost(File image,String caption,BuildContext ctx)async{
+class PostServices {
+  static Future<bool> uploadPost(
+      File image, String caption, BuildContext ctx) async {
     bool isSuccessful = false;
-    try{
-
+    try {
       final uid = FirebaseAuth.instance.currentUser!.uid;
       final reference = FirebaseStorage.instance;
 
-      final fileName =  "${const Uuid().v1()}.jpg";
-      TaskSnapshot details = await reference.ref().child("posts/$uid/$fileName").putFile(image).whenComplete((){});
-      if(details.state == TaskState.success){
-        isSuccessful  = true;
+      final fileName = "${const Uuid().v1()}.jpg";
+      TaskSnapshot details = await reference
+          .ref()
+          .child("posts/$uid/$fileName")
+          .putFile(image)
+          .whenComplete(() {});
+      if (details.state == TaskState.success) {
+        isSuccessful = true;
         final imageUrl = await details.ref.getDownloadURL();
-        await FirebaseFirestore.instance.collection("posts").doc(uid).collection("images").add({
-          "userId" : uid,
+        await FirebaseFirestore.instance
+            .collection("posts")
+            .doc(uid)
+            .collection("images")
+            .add({
+          "userId": uid,
           "imageUrl": imageUrl,
           "caption": caption,
-          "time": DateTime.now()
+          "createdAt": DateTime.now()
         });
-
       }
-
-    }
-    on FirebaseException catch (e) {
+    } on FirebaseException catch (e) {
       isSuccessful = false;
-      AccessoryWidgets.snackBar(
-          'FirebaseException while uploading file', ctx);
+      AccessoryWidgets.snackBar('FirebaseException while uploading file', ctx);
       // Handle FirebaseException
     } on IOException catch (e) {
       isSuccessful = false;
@@ -47,7 +50,5 @@ class PostServices{
       // Handle other exceptions
     }
     return isSuccessful;
-
-
   }
 }

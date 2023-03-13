@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import '../../models/post_model.dart';
+import '../../provider/post_provider.dart';
 
 class LikesAndCommentWidget extends StatefulWidget {
   const LikesAndCommentWidget({required this.post, Key? key}) : super(key: key);
@@ -50,10 +51,12 @@ class _LikesAndCommentWidgetState extends State<LikesAndCommentWidget> {
                     },
                     icon: const Icon(Ionicons.chatbubble_outline)),
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+
+                    },
                     icon: const Icon(Ionicons.bookmark_outline)),
                 const Expanded(child: SizedBox()),
-                Text(DateFormat.MMMd().format(widget.post.postTime),style: GoogleFonts.nunitoSans(fontWeight: FontWeight.w700),),
+                Text(DateFormat.MMMd().format(widget.post.createdAt),style: GoogleFonts.nunitoSans(fontWeight: FontWeight.w700),),
                 const SizedBox(width: 10,)
 
               ],

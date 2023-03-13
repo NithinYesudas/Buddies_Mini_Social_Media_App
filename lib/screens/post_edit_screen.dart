@@ -111,6 +111,6 @@ class _PostEditScreenState extends State<PostEditScreen> {
   }
 
   void newPage() {
-    Navigator.of(context).pushReplacementNamed("MainScreen");
+    Navigator.of(context).pop();
   }
 }
