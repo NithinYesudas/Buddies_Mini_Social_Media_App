@@ -87,7 +87,9 @@ class _MainScreenState extends State<MainScreen> {
                     try {
                       image = await ImagePicker()
                           .pickImage(source: ImageSource.gallery,imageQuality: 40);
-                      newPage();
+                      if(image!=null) {
+                        newPage();
+                      }
 
                     } catch (e) {
                       print(e.toString());
