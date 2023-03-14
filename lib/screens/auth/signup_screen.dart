@@ -23,7 +23,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _confirmPasswordController =
   TextEditingController();
   bool isLoading = false;
-
+@override
+  void dispose() {
+    // TODO: implement dispose
+  _emailController.dispose();
+  _passwordController.dispose();
+  _confirmPasswordController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery
@@ -199,6 +206,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void newPage() {
-    Navigator.pushReplacement(context, SlidePageRoute(page: UserDataCollection()));
+    Navigator.pushReplacement(context, SlidePageRoute(page: const UserDataCollection()));
   }
 }

@@ -75,11 +75,14 @@ class AuthServices {
         String imageUrl = await details.ref.getDownloadURL();//get image url from storage
 
         await fireStoreRef.collection('users').doc(uid).set({
-          "uid": uid,
+          "userId": uid,
           "email": email,
           "name": name,
           "bio": bio,
-          "imageUrl": imageUrl
+          "imageUrl": imageUrl,
+          "followingCount":0,
+          "followersCount":0,
+          "postCount":0
         });
       }
     } on FirebaseException catch (e) {

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:buddies/screens/home_screen.dart';
 import 'package:buddies/screens/post_edit_screen.dart';
+import 'package:buddies/screens/search_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,7 +34,10 @@ class _MainScreenState extends State<MainScreen> {
             onPressed: () {
               FirebaseAuth.instance.signOut();
             },
-            icon:  Icon(Ionicons.chatbox_ellipses,color: CustomColors.lightAccent,))
+            icon: Icon(
+              Ionicons.chatbox_ellipses,
+              color: CustomColors.lightAccent,
+            ))
       ],
     ),
     AppBar(),
@@ -43,8 +47,8 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   List<Widget> screen = [
-    HomeScreen(),
-    Center(child: Text("hello")),
+    const HomeScreen(),
+    SearchScreen(),
     SizedBox(),
     SizedBox(),
     SizedBox()
@@ -70,27 +74,25 @@ class _MainScreenState extends State<MainScreen> {
           setState(() => index = val);
         },
         items: [
-           BottomNavigationBarItem(
-              icon: Icon( index == 0?Ionicons.home_sharp:
-                Ionicons.home_outline,
+          BottomNavigationBarItem(
+              icon: Icon(
+                index == 0 ? Ionicons.home_sharp : Ionicons.home_outline,
               ),
               label: " "),
-           BottomNavigationBarItem(
+          BottomNavigationBarItem(
               icon: Icon(
-                index == 1?Ionicons.search_sharp:
-                Ionicons.search_outline,
+                index == 1 ? Ionicons.search_sharp : Ionicons.search_outline,
               ),
               label: " "),
           BottomNavigationBarItem(
               icon: IconButton(
                   onPressed: () async {
                     try {
-                      image = await ImagePicker()
-                          .pickImage(source: ImageSource.gallery,imageQuality: 40);
-                      if(image!=null) {
+                      image = await ImagePicker().pickImage(
+                          source: ImageSource.gallery, imageQuality: 40);
+                      if (image != null) {
                         newPage();
                       }
-
                     } catch (e) {
                       print(e.toString());
                     }
@@ -114,7 +116,9 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
-  void newPage(){
-    Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>PostEditScreen(image: File(image!.path))));
+
+  void newPage() {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (ctx) => PostEditScreen(image: File(image!.path))));
   }
 }
