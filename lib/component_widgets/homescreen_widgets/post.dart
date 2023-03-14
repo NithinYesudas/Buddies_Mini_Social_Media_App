@@ -20,6 +20,7 @@ class PostWidget extends StatelessWidget {
           const Divider(color: Colors.white,height: 4,),
           SizedBox(
               height: mediaQuery.height * .5,
+              width: mediaQuery.width,
               child: Image.network(
                 post.imageUrl,
                 fit: BoxFit.cover,

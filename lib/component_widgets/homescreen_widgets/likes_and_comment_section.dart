@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import '../../models/post_model.dart';
-import '../../provider/post_provider.dart';
 
 class LikesAndCommentWidget extends StatefulWidget {
   const LikesAndCommentWidget({required this.post, Key? key}) : super(key: key);
@@ -18,8 +17,6 @@ class LikesAndCommentWidget extends StatefulWidget {
 
 class _LikesAndCommentWidgetState extends State<LikesAndCommentWidget> {
   final uid = FirebaseAuth.instance.currentUser!.uid;
-  final TextEditingController _controller = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
@@ -46,19 +43,21 @@ class _LikesAndCommentWidgetState extends State<LikesAndCommentWidget> {
                           : Colors.black,
                     )),
                 IconButton(
-                    onPressed: (){
+                    onPressed: () {
                       CommentSheet.openModalBottomSheet(context, widget.post);
                     },
                     icon: const Icon(Ionicons.chatbubble_outline)),
                 IconButton(
-                    onPressed: () {
-
-                    },
+                    onPressed: () {},
                     icon: const Icon(Ionicons.bookmark_outline)),
                 const Expanded(child: SizedBox()),
-                Text(DateFormat.MMMd().format(widget.post.createdAt),style: GoogleFonts.nunitoSans(fontWeight: FontWeight.w700),),
-                const SizedBox(width: 10,)
-
+                Text(
+                  DateFormat.MMMd().format(widget.post.createdAt),
+                  style: GoogleFonts.nunitoSans(fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(
+                  width: 10,
+                )
               ],
             ),
           ),
@@ -76,8 +75,8 @@ class _LikesAndCommentWidgetState extends State<LikesAndCommentWidget> {
                   style: GoogleFonts.nunitoSans(fontWeight: FontWeight.w800),
                 ),
                 TextButton(
-                  onPressed: (){
-                    CommentSheet.openModalBottomSheet(context,widget.post);
+                  onPressed: () {
+                    CommentSheet.openModalBottomSheet(context, widget.post);
                   },
                   style: ButtonStyle(
                       padding: MaterialStateProperty.all(EdgeInsets.zero)),
@@ -105,6 +104,4 @@ class _LikesAndCommentWidgetState extends State<LikesAndCommentWidget> {
       ),
     );
   }
-
-
 }

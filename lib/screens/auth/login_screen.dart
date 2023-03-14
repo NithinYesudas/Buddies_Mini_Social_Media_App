@@ -1,6 +1,5 @@
 import 'package:buddies/helpers/auth/validators.dart';
 import 'package:buddies/screens/auth/signup_screen.dart';
-
 import 'package:buddies/services/auth_services.dart';
 import 'package:buddies/utils/custom_colors.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../helpers/custom_route_animation.dart';
-import 'auth_pages.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -25,6 +23,13 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   bool isLoading = false;
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

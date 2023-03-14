@@ -33,7 +33,7 @@ class PostServices {
           "userId": uid,
           "imageUrl": imageUrl,
           "caption": caption,
-          "createdAt": DateTime.now()
+          "createdAt": DateTime.now().toIso8601String()
         });
       }
     } on FirebaseException catch (e) {

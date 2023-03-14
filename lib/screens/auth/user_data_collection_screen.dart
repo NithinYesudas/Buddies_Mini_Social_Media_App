@@ -21,6 +21,13 @@ class _UserDataCollectionState extends State<UserDataCollection> {
   final TextEditingController _bioController = TextEditingController();
   bool isLoading = false;
   XFile? image;
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _nameController.dispose();
+    _bioController.dispose();
+    super.dispose();
+  }
 
   ImageProvider get imageProvider {
     if (image == null) {
@@ -178,7 +185,7 @@ class _UserDataCollectionState extends State<UserDataCollection> {
                                 bool isSuccessful =
                                     await AuthServices.uploadDetails(
                                         File(image!.path),
-                                        _nameController.text.trim(),
+                                        _nameController.text.toLowerCase(),
                                         _bioController.text,
                                         context);
                                 isLoading = false;
