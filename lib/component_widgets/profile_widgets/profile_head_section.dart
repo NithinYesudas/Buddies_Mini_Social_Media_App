@@ -8,9 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 class ProfileHeadSection extends StatelessWidget {
   ProfileHeadSection({required this.userId, Key? key}) : super(key: key);
   final String userId;
-  final HttpsCallable findMutualFollowers =
-      FirebaseFunctions.instance.httpsCallable('getMutualFollowers');
-  final currentUserId = FirebaseAuth.instance.currentUser!.uid;
+
 
   @override
   Widget build(BuildContext context) {
@@ -76,56 +74,7 @@ class ProfileHeadSection extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                SizedBox(
-                  height: mediaQuery.height * .04,
-                  child: FutureBuilder(
-                      future: findMutualFollowers.call({
-                        'currentUserId': currentUserId,
-                        'selectedUserId': userId,
-                      }),
-                      builder: (ctx, snapshot) {
-                        final result = snapshot.data;
-                        if (snapshot.connectionState ==
-                                ConnectionState.waiting ||
-                            result == null) {
-                          return const SizedBox();
-                        }
 
-                        final data = result.data;
-
-                        return SizedBox(
-                          width: mediaQuery.width,
-                          child: Row(
-                            children: [
-                              Text(
-                                "Followed by: ",
-                                style: GoogleFonts.nunitoSans(
-                                    fontWeight: FontWeight.w700),
-                              ),
-                              Row(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundImage:
-                                        NetworkImage(data[0]["imageUrl"]),
-                                  ),
-                                  Text(data[0]["name"],
-                                      style: GoogleFonts.nunitoSans(
-                                          fontWeight: FontWeight.w700)),
-                                  data.length > 1
-                                      ? Text(
-                                          " and ${data.length} others",
-                                          style: GoogleFonts.nunitoSans(
-                                              fontWeight: FontWeight.w700,
-                                              color: CustomColors.lightAccent),
-                                        )
-                                      : const SizedBox()
-                                ],
-                              )
-                            ],
-                          ),
-                        );
-                      }),
-                ),
 
               ],
             ),

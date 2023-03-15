@@ -1,3 +1,4 @@
+import 'package:buddies/component_widgets/profile_widgets/mutual_followers_list.dart';
 import 'package:buddies/utils/custom_colors.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,12 +7,19 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../component_widgets/profile_widgets/profile_head_section.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   ProfileScreen({required this.name, required this.userId, Key? key})
       : super(key: key);
   final String name, userId;
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   final HttpsCallable isFollowing =
       FirebaseFunctions.instance.httpsCallable('isFollowing');
+
   final currentUserId = FirebaseAuth.instance.currentUser!.uid;
 
   @override
@@ -22,28 +30,29 @@ class ProfileScreen extends StatelessWidget {
           leading: const SizedBox(),
           leadingWidth: 2,
           title: Text(
-            name,
+            widget.name,
             style: GoogleFonts.nunitoSans(fontWeight: FontWeight.w800),
           ),
         ),
         body: Column(
           children: [
             ProfileHeadSection(
-              userId: userId,
+              userId: widget.userId,
             ),
             SizedBox(height: mediaQuery.height*.02,),
+            MutualFollowersList(selectedUserId: widget.userId),
             SizedBox(
               height: MediaQuery.of(context).size.height * .05,
               child: FutureBuilder(
                   future: isFollowing.call({
                     'currentUserId': currentUserId,
-                    'selectedUserId': userId,
+                    'selectedUserId': widget.userId,
                   }),
                   builder: (ctx, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return SizedBox();
                     } else {
-                      final data = snapshot.data!.data;
+                      var data = snapshot.data!.data;
                       return ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -52,7 +61,11 @@ class ProfileScreen extends StatelessWidget {
                                 vertical: 0,
                                   horizontal:
                                       MediaQuery.of(context).size.width*.3)),
-                          onPressed: () {},
+                          onPressed: () {
+
+
+
+                          },
                           child: Text(
                             data ? "Unfollow" : "Follow",
                             style: GoogleFonts.nunitoSans(
