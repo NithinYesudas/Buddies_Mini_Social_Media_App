@@ -24,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<PostProvider>(builder: (context, data, child) {
+
       if (data.getFollowingPosts.isEmpty) {
         return Center(
           child: Text(
