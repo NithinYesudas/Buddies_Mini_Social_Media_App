@@ -19,6 +19,7 @@ class AuthServices {
         email: email,
         password: password,
       );
+      print("logging in");
     } on FirebaseAuthException catch (e) {
       isSuccessful = false;
       String? message;

@@ -1,9 +1,11 @@
+import 'package:buddies/provider/profile_provider.dart';
 import 'package:buddies/screens/profile_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:provider/provider.dart';
 
 import '../utils/custom_colors.dart';
 
@@ -25,7 +27,7 @@ class _SearchScreenState extends State<SearchScreen> {
         title: TextField(
           decoration: InputDecoration(
               contentPadding:
-              const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
+                  const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
               prefixIcon: Icon(
                 Ionicons.search_outline,
                 color: CustomColors.lightAccent,
@@ -51,7 +53,6 @@ class _SearchScreenState extends State<SearchScreen> {
             .collection('users')
             .where('name', isGreaterThanOrEqualTo: _searchText)
             .where('name', isLessThan: '${_searchText}z')
-
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
@@ -81,17 +82,20 @@ class _SearchScreenState extends State<SearchScreen> {
               final String name = data['name'];
               final String imageUrl = data['imageUrl'];
 
-
               return ListTile(
-
-
                 leading: CircleAvatar(
                   backgroundImage: NetworkImage(imageUrl),
                 ),
                 title: Text(name),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (ctx) =>
-                      ProfileScreen(name: name, userId: data['userId'], )));
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (ctx) =>
+                            ProfileScreen(
+
+                              userId: data['userId'],
+                            )),
+                  );
                 },
               );
             },

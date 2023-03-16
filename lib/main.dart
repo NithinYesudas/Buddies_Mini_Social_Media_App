@@ -1,4 +1,5 @@
 import 'package:buddies/provider/post_provider.dart';
+import 'package:buddies/provider/profile_provider.dart';
 import 'package:buddies/screens/auth/auth_pages.dart';
 import 'package:buddies/screens/auth/login_screen.dart';
 import 'package:buddies/screens/auth/signup_screen.dart';
@@ -22,14 +23,18 @@ class BuddiesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<PostProvider>(
-      create: (ctx)=>PostProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<PostProvider>(create: (ctx) => PostProvider()),
+        ChangeNotifierProvider<ProfileProvider>(
+            create: (ctx) => ProfileProvider())
+      ],
       child: MaterialApp(
         routes: {
           "SignUpScreen": (ctx) => const SignUpScreen(),
           "LoginScreen": (ctx) => const LoginScreen(),
-          "HomeScreen": (ctx) =>  HomeScreen(),
-          "MainScreen": (ctx)=> MainScreen()
+          "HomeScreen": (ctx) => HomeScreen(),
+          "MainScreen": (ctx) => MainScreen()
         },
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -43,11 +48,10 @@ class BuddiesApp extends StatelessWidget {
                 return StreamBuilder(
                     stream: FirebaseAuth.instance.authStateChanges(),
                     builder: (ctx, snapshot) {
-
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const SplashScreen();
                       } else if (snapshot.hasData) {
-                        return  const MainScreen();
+                        return const MainScreen();
                       } else {
                         return const AuthPages();
                       }

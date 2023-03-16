@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:buddies/screens/home_screen.dart';
 import 'package:buddies/screens/post_edit_screen.dart';
+import 'package:buddies/screens/profile_screen.dart';
 import 'package:buddies/screens/search_screen.dart';
+import 'package:buddies/utils/accessory_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,7 +21,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  List<AppBar> appbars = [
+  List<PreferredSizeWidget> appbars = [
     AppBar(
       backgroundColor: Colors.white,
       title: Text(
@@ -42,16 +44,22 @@ class _MainScreenState extends State<MainScreen> {
     ),
     AppBar(),
     AppBar(),
-    AppBar(),
+    const PreferredSize(
+        preferredSize: Size.fromHeight(20),
+        child: SizedBox(
+          height: 25,
+        )),
     AppBar(),
   ];
 
   List<Widget> screen = [
     const HomeScreen(),
-    SearchScreen(),
-    SizedBox(),
-    SizedBox(),
-    SizedBox()
+    const SearchScreen(),
+    const SizedBox(),
+    ProfileScreen(
+      userId: FirebaseAuth.instance.currentUser!.uid,
+    ),
+    const SizedBox()
   ];
 
   int index = 0;
@@ -94,7 +102,7 @@ class _MainScreenState extends State<MainScreen> {
                         newPage();
                       }
                     } catch (e) {
-                      print(e.toString());
+                      AccessoryWidgets.snackBar("An error occurred", context);
                     }
                   },
                   icon: const Icon(
@@ -103,10 +111,7 @@ class _MainScreenState extends State<MainScreen> {
                   )),
               label: " "),
           const BottomNavigationBarItem(
-              icon: Icon(
-                Ionicons.person_circle_outline,
-              ),
-              label: " "),
+              icon: Icon(Ionicons.person_circle_outline), label: " "),
           const BottomNavigationBarItem(
               icon: Icon(
                 Ionicons.settings_outline,
