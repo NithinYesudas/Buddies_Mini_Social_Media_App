@@ -6,11 +6,7 @@ import '../models/post_model.dart';
 
 class PostProvider extends ChangeNotifier {
   List<Post> _followingPosts = [];
-  List<Post> _userPosts = [];
 
-  List<Post> get getUserPosts {
-    return _userPosts;
-  }
 
   List<Post> get getFollowingPosts {
     return _followingPosts;
@@ -44,24 +40,5 @@ class PostProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> fetchUserPosts(String userId) async {
-    final ref = FirebaseFirestore.instance;
-    final result =
-        await ref.collection("posts").doc(userId).collection("images").get();
-    final postList = result.docs;
-    final List<Post> loadedPosts = [];
-    for (var element in postList) {
-      final data = element.data();
-      loadedPosts.add(Post(
-          userId: data['userId'],
-          id: 'id',
-          imageUrl: data["imageUrl"],
-          caption: data["caption"],
-          likes: ["dfdjfdkjfdk"],
-          createdAt: DateTime.parse(data["createdAt"]),
-          comments: [Comment(userId: "userId", comment: "comment")]));
-    }
-    _userPosts = loadedPosts;
-    notifyListeners();
-  }
+
 }

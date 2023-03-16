@@ -33,6 +33,7 @@ class PostServices {
           "userId": uid,
           "imageUrl": imageUrl,
           "caption": caption,
+          "postId": "",
           "createdAt": DateTime.now().toIso8601String()
         });
       }
