@@ -1,15 +1,17 @@
 class Post {
-  final String userId, id, imageUrl, caption;
-  final List<String> likes;
+  final String userId, postId, imageUrl, caption;
+  final int likesCount;
   final List<Comment> comments;
   final DateTime createdAt;
+  final bool isLiked;
 
   Post(
       {required this.userId,
-      required this.id,
+      required this.postId,
       required this.imageUrl,
       required this.caption,
-      required this.likes,
+        required this.isLiked,
+      required this.likesCount,
       required this.createdAt,
       required this.comments});
 }

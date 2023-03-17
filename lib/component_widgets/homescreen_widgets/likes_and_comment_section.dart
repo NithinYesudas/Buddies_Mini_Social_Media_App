@@ -1,4 +1,5 @@
 import 'package:buddies/component_widgets/homescreen_widgets/comment_sheet.dart';
+import 'package:buddies/services/post_services.dart';
 import 'package:buddies/utils/custom_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -32,16 +33,34 @@ class _LikesAndCommentWidgetState extends State<LikesAndCommentWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      widget.post.likes.contains(uid)
-                          ? Ionicons.heart_sharp
-                          : Ionicons.heart_outline,
-                      color: widget.post.likes.contains(uid)
-                          ? Colors.red
-                          : Colors.black,
-                    )),
+                FutureBuilder(
+                    future: PostServices.getIsLiked(
+                        selectedUserId: widget.post.userId,
+                        postId: widget.post.postId),
+                    builder: (context, snapshot) {
+                      bool isLiked =widget.post.isLiked;
+                      if(snapshot.connectionState == ConnectionState.done) {
+                        isLiked = snapshot.data as bool;
+                      }
+
+                      return IconButton(
+                          onPressed: () {
+                            final result = PostServices.likeDislike(
+                                    widget.post.userId,
+                                    widget.post.postId,
+                                    !isLiked,
+                                    context)
+                                .whenComplete(() => null);
+                            result.then((value) => setState((){}));
+                          },
+                          icon: Icon(
+                            isLiked
+                                ? Ionicons.heart_sharp
+                                : Ionicons.heart_outline,
+                            color:
+                                isLiked ? Colors.red : Colors.black,
+                          ));
+                    }),
                 IconButton(
                     onPressed: () {
                       CommentSheet.openModalBottomSheet(context, widget.post);
@@ -69,9 +88,9 @@ class _LikesAndCommentWidgetState extends State<LikesAndCommentWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  widget.post.likes.length < 2
-                      ? "${widget.post.likes.length} like"
-                      : "${widget.post.likes.length.toString()} likes",
+                  widget.post.likesCount < 2
+                      ? "${widget.post.likesCount} like"
+                      : "${widget.post.likesCount.toString()} likes",
                   style: GoogleFonts.nunitoSans(fontWeight: FontWeight.w800),
                 ),
                 TextButton(

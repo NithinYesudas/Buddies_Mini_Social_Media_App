@@ -1,3 +1,4 @@
+import 'package:buddies/models/user_model.dart';
 import 'package:buddies/provider/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,8 +21,10 @@ class _ProfileHeadSectionState extends State<ProfileHeadSection> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
-    return Consumer<ProfileProvider>(builder: (context, data, child) {
-      final selectedUser = data.getSelectedUser;
+    return Selector<ProfileProvider,UserProfile?>(
+      selector: (_,myProfileProvider)=>myProfileProvider.getSelectedUser,
+        builder: (context, getSelectedUser, child) {
+      final selectedUser = getSelectedUser;
       if(selectedUser==null){
         return const SizedBox();
       }

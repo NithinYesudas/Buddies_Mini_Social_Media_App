@@ -23,36 +23,36 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<PostProvider>(builder: (context, data, child) {
+    return Selector<PostProvider, List<Post>>(
+        selector: (_, myPostProvider) => myPostProvider.getFollowingPosts,
+        builder: (context, getFollowingPosts, child) {
+          if (getFollowingPosts.isEmpty) {
+            return Center(
+              child: Text(
+                "Follow some people to see their posts",
+                style: GoogleFonts.nunitoSans(fontWeight: FontWeight.w700),
+              ),
+            );
+          }
+          List<Post> posts = getFollowingPosts;
 
-      if (data.getFollowingPosts.isEmpty) {
-        return Center(
-          child: Text(
-            "Follow some people to see their posts",
-            style: GoogleFonts.nunitoSans(fontWeight: FontWeight.w700),
-          ),
-        );
-      }
-      List<Post> posts = data.getFollowingPosts;
-
-      return RefreshIndicator(
-        color: CustomColors.lightAccent,
-        onRefresh: Provider.of<PostProvider>(
-          context,
-        ).fetchFollowingPosts,
-        child: ListView.builder(
-            itemCount: posts.length,
-            itemBuilder: (ctx, index) {
-              return Column(
-                children: [
-                  PostWidget(post: posts[index]),
-                  const Divider(
-                    color: Colors.black26,
-                  )
-                ],
-              );
-            }),
-      );
-    });
+          return RefreshIndicator(
+            color: CustomColors.lightAccent,
+            onRefresh: Provider.of<PostProvider>(context, listen: false)
+                .fetchFollowingPosts,
+            child: (ListView.builder(
+                itemCount: posts.length,
+                itemBuilder: (ctx, index) {
+                  return Column(
+                    children: [
+                      PostWidget(post: posts[index]),
+                      const Divider(
+                        color: Colors.black26,
+                      )
+                    ],
+                  );
+                })),
+          );
+        });
   }
 }

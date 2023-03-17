@@ -18,11 +18,13 @@ class MutualFollowersList extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context).size;
     return SizedBox(
       height: mediaQuery.height * .04,
-      child: Consumer<ProfileProvider>(builder: (ctx, providerData, snapshot) {
-        if (providerData.getMutualFollowers.isEmpty) {
+      child: Selector<ProfileProvider,List<dynamic>>(
+        selector: (_,myProfileProvider)=> myProfileProvider.getMutualFollowers,
+          builder: (ctx, getMutualFollowers, snapshot) {
+        if (getMutualFollowers.isEmpty) {
           return const SizedBox();
         }
-        final data = providerData.getMutualFollowers;
+        final data = getMutualFollowers;
 
         return Container(
           padding: EdgeInsets.symmetric(horizontal: mediaQuery.width * .04),
