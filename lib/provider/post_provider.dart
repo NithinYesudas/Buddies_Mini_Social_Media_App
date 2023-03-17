@@ -6,7 +6,7 @@ import '../models/post_model.dart';
 
 class PostProvider extends ChangeNotifier {
   List<Post> _followingPosts = [];
-
+  bool isLiked = true;
 
   List<Post> get getFollowingPosts {
     return _followingPosts;
@@ -23,12 +23,13 @@ class PostProvider extends ChangeNotifier {
       postList.forEach((post) {
         loadedPosts.add(Post(
             userId: post["userId"],
-            id: "id",
+            postId: post["postId"],
             imageUrl: post["imageUrl"],
             caption: post["caption"],
-            likes: ["jhdkjkdjfkd"],
+            likesCount: post["likesCount"],
             createdAt: DateTime.parse(post["createdAt"]),
-            comments: [Comment(userId: "dhdhhd", comment: "comment")]));
+            comments: [Comment(userId: "dhdhhd", comment: "comment")],
+            isLiked: post["isLiked"]));
       });
 
       _followingPosts = loadedPosts;

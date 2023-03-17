@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -34,6 +35,7 @@ class PostServices {
           "imageUrl": imageUrl,
           "caption": caption,
           "postId": "",
+          "likesCount": 0,
           "createdAt": DateTime.now().toIso8601String()
         });
       }
@@ -51,5 +53,63 @@ class PostServices {
       // Handle other exceptions
     }
     return isSuccessful;
+  }
+
+  static Future<void> likeDislike(String selectedUserId, String postId,
+      bool isLike, BuildContext context) async {
+    final fireStore = FirebaseFirestore.instance;
+    final currentUserId = FirebaseAuth.instance.currentUser!.uid;
+    try {
+      if (isLike) {
+        await fireStore
+            .collection("posts")
+            .doc(selectedUserId)
+            .collection("images")
+            .doc(postId)
+            .collection("likes")
+            .doc(currentUserId)
+            .set({"userId": currentUserId});
+      } else {
+        await fireStore
+            .collection("posts")
+            .doc(selectedUserId)
+            .collection("images")
+            .doc(postId)
+            .collection("likes")
+            .doc(currentUserId)
+            .delete();
+      }
+    } on FirebaseException catch (e) {
+      AccessoryWidgets.snackBar(e.code, context);
+    } catch (e) {
+      AccessoryWidgets.snackBar("An error occurred", context);
+    }
+  }
+
+  static Future<bool> getIsLiked(
+      {required String selectedUserId, required String postId}) async {
+    HttpsCallable isLiked = FirebaseFunctions.instance.httpsCallable('isLiked');
+    final result = await isLiked
+        .call({'selectedUserId': selectedUserId, 'postId': postId});
+    return result.data;
+  }
+
+  static Future<void> addComment(String comment, String selectedUserId,
+      String postId, BuildContext context) async {
+    final fireStore = FirebaseFirestore.instance;
+    final currentUserId = FirebaseAuth.instance.currentUser!.uid;
+    try {
+      await fireStore
+          .collection("posts")
+          .doc(selectedUserId)
+          .collection("images")
+          .doc(postId)
+          .collection("comments")
+          .add({"userId": currentUserId, "comment": comment});
+    } on FirebaseException catch (e) {
+      AccessoryWidgets.snackBar(e.code, context);
+    } catch (e) {
+      AccessoryWidgets.snackBar("An error occurred", context);
+    }
   }
 }
