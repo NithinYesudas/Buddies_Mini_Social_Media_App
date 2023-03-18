@@ -36,6 +36,7 @@ class PostServices {
           "caption": caption,
           "postId": "",
           "likesCount": 0,
+          "commentsCount":0,
           "createdAt": DateTime.now().toIso8601String()
         });
       }

@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:buddies/screens/home_screen.dart';
+import 'package:buddies/screens/home_tab_screens/home_screen.dart';
 import 'package:buddies/screens/post_edit_screen.dart';
-import 'package:buddies/screens/profile_screen.dart';
-import 'package:buddies/screens/search_screen.dart';
+import 'package:buddies/screens/home_tab_screens/profile_screen.dart';
+import 'package:buddies/screens/home_tab_screens/search_screen.dart';
 import 'package:buddies/utils/accessory_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,36 +20,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  List<PreferredSizeWidget> appbars = [
-    AppBar(
-      backgroundColor: Colors.white,
-      title: Text(
-        "Buddies",
-        style: GoogleFonts.nunito(
-            fontWeight: FontWeight.w900,
-            color: CustomColors.lightAccent,
-            fontSize: 20),
-      ),
-      actions: [
-        IconButton(
-            onPressed: () {
-              FirebaseAuth.instance.signOut();
-            },
-            icon: Icon(
-              Ionicons.chatbox_ellipses,
-              color: CustomColors.lightAccent,
-            ))
-      ],
-    ),
-    AppBar(),
-    AppBar(),
-    const PreferredSize(
-        preferredSize: Size.fromHeight(20),
-        child: SizedBox(
-          height: 25,
-        )),
-    AppBar(),
-  ];
+
 
   List<Widget> screen = [
     const HomeScreen(),
@@ -68,7 +39,6 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: screen[index],
-      appBar: appbars[index],
       bottomNavigationBar: BottomNavigationBar(
         unselectedIconTheme: const IconThemeData(color: Colors.black),
         selectedIconTheme: IconThemeData(color: CustomColors.lightAccent),

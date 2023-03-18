@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../component_widgets/profile_widgets/profile_head_section.dart';
+import '../../component_widgets/profile_widgets/profile_head_section.dart';
+
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({required this.userId, Key? key}) : super(key: key);
@@ -31,14 +32,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final mediaQuery = MediaQuery.of(context).size;
     final currentUserId = FirebaseAuth.instance.currentUser!.uid;
 
+
     return Scaffold(
         appBar: AppBar(
+          actions: [
+            widget.userId== currentUserId?IconButton(onPressed: (){
+              FirebaseAuth.instance.signOut();
+            }, icon: const Icon(Icons.more_vert_rounded,color: Colors.black,)):SizedBox()
+          ],
           leading: const SizedBox(),
           leadingWidth: 2,
           title: Consumer<ProfileProvider>(builder: (context, data, child) {
-            final name = data.getSelectedUser;
+            final user = data.getSelectedUser;
+
             return Text(
-              name != null ? name.name : " ",
+              user != null ? user.name : " ",
+
               style: GoogleFonts.nunitoSans(fontWeight: FontWeight.w800),
             );
           }),
