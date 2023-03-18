@@ -3,7 +3,8 @@ import 'package:buddies/provider/profile_provider.dart';
 import 'package:buddies/screens/auth/auth_pages.dart';
 import 'package:buddies/screens/auth/login_screen.dart';
 import 'package:buddies/screens/auth/signup_screen.dart';
-import 'package:buddies/screens/home_screen.dart';
+import 'package:buddies/screens/chat_screens/chat_list_screen.dart';
+import 'package:buddies/screens/home_tab_screens/home_screen.dart';
 import 'package:buddies/screens/main_screen.dart';
 import 'package:buddies/screens/splashScreen.dart';
 import 'package:buddies/utils/custom_colors.dart';
@@ -33,8 +34,9 @@ class BuddiesApp extends StatelessWidget {
         routes: {
           "SignUpScreen": (ctx) => const SignUpScreen(),
           "LoginScreen": (ctx) => const LoginScreen(),
-          "HomeScreen": (ctx) => HomeScreen(),
-          "MainScreen": (ctx) => MainScreen()
+          "HomeScreen": (ctx) => const HomeScreen(),
+          "MainScreen": (ctx) => const MainScreen(),
+          "ChatScreen":(ctx)=> ChatScreen()
         },
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

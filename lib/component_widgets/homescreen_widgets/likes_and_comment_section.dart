@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
+
 import '../../models/post_model.dart';
 
 class LikesAndCommentWidget extends StatefulWidget {
@@ -38,8 +39,8 @@ class _LikesAndCommentWidgetState extends State<LikesAndCommentWidget> {
                         selectedUserId: widget.post.userId,
                         postId: widget.post.postId),
                     builder: (context, snapshot) {
-                      bool isLiked =widget.post.isLiked;
-                      if(snapshot.connectionState == ConnectionState.done) {
+                      bool isLiked = widget.post.isLiked;
+                      if (snapshot.connectionState == ConnectionState.done) {
                         isLiked = snapshot.data as bool;
                       }
 
@@ -51,14 +52,13 @@ class _LikesAndCommentWidgetState extends State<LikesAndCommentWidget> {
                                     !isLiked,
                                     context)
                                 .whenComplete(() => null);
-                            result.then((value) => setState((){}));
+                            result.then((value) => setState(() {}));
                           },
                           icon: Icon(
                             isLiked
                                 ? Ionicons.heart_sharp
                                 : Ionicons.heart_outline,
-                            color:
-                                isLiked ? Colors.red : Colors.black,
+                            color: isLiked ? Colors.red : Colors.black,
                           ));
                     }),
                 IconButton(
@@ -100,9 +100,9 @@ class _LikesAndCommentWidgetState extends State<LikesAndCommentWidget> {
                   style: ButtonStyle(
                       padding: MaterialStateProperty.all(EdgeInsets.zero)),
                   child: Text(
-                    widget.post.comments.length < 2
-                        ? "View ${widget.post.comments.length} comment"
-                        : "View all ${widget.post.comments.length} comments",
+                    widget.post.commentsCount < 2
+                        ? "View ${widget.post.commentsCount} comment"
+                        : "View all ${widget.post.commentsCount} comments",
                     style: GoogleFonts.nunitoSans(
                         fontWeight: FontWeight.w800,
                         color: CustomColors.lightAccent),

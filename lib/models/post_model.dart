@@ -1,7 +1,7 @@
 class Post {
   final String userId, postId, imageUrl, caption;
-  final int likesCount;
-  final List<Comment> comments;
+  final int likesCount, commentsCount;
+
   final DateTime createdAt;
   final bool isLiked;
 
@@ -10,10 +10,11 @@ class Post {
       required this.postId,
       required this.imageUrl,
       required this.caption,
-        required this.isLiked,
+      required this.commentsCount,
+      required this.isLiked,
       required this.likesCount,
       required this.createdAt,
-      required this.comments});
+});
 }
 
 class Comment {

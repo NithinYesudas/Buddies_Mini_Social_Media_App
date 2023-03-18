@@ -27,8 +27,9 @@ class PostProvider extends ChangeNotifier {
             imageUrl: post["imageUrl"],
             caption: post["caption"],
             likesCount: post["likesCount"],
+            commentsCount: post["commentsCount"],
             createdAt: DateTime.parse(post["createdAt"]),
-            comments: [Comment(userId: "dhdhhd", comment: "comment")],
+
             isLiked: post["isLiked"]));
       });
 
