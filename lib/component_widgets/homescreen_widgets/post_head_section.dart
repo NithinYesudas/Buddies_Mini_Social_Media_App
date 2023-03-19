@@ -22,6 +22,7 @@ class PostHeadWidget extends StatelessWidget {
             height: mediaQuery.height * .06,
             child: ListTile(
               leading: CircleAvatar(
+                backgroundColor: Colors.white,
                 radius: 18,
                 backgroundImage: NetworkImage(data["imageUrl"]),
               ),

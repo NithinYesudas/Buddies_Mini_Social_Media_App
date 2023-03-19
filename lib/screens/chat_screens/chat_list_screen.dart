@@ -17,19 +17,31 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    final mediaQuery = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: const Icon(
+            Icons.arrow_back_rounded,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: CustomColors.lightAccent,
         title: Text(
           "Chats",
-          style: GoogleFonts.nunitoSans(fontWeight: FontWeight.w800),
+          style: GoogleFonts.nunitoSans(
+              fontWeight: FontWeight.w800, color: Colors.white),
         ),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection("chats")
             .doc(currentUserId)
-            .collection("people").orderBy("createdAt")
+            .collection("people")
+            .orderBy("createdAt")
             .snapshots(),
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -51,12 +63,12 @@ class ChatScreen extends StatelessWidget {
           }
 
           final people = snapshot.data!.docs;
-          print(snapshot.data!.docs.length);
 
           return ListView.builder(
               itemCount: people.length,
               itemBuilder: (_, index) {
-                final user = people[people.length -index-1].id;//to reverse the list
+                final user =
+                    people[people.length - index - 1].id; //to reverse the list
                 return FutureBuilder(
                     future: fireStore.collection("users").doc(user).get(),
                     builder: (_, futureSnapshot) {
@@ -75,21 +87,30 @@ class ChatScreen extends StatelessWidget {
                           followingCount: data['followingCount'],
                           postCount: data['postCount']);
                       final name = selectedUser.name;
-                      return ListTile(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (ctx) =>
-                                  MessagesScreen(selectedUser: selectedUser)));
-                        },
-                        title: Text(
-                          name,
-                          style: GoogleFonts.nunitoSans(
-                              fontWeight: FontWeight.w700),
-                        ),
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(data["imageUrl"]),
-                        ),
-                        // subtitle: LastMessage(userId:data["userId"]),
+                      return Column(
+                        children: [
+                          ListTile(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (ctx) => MessagesScreen(
+                                      selectedUser: selectedUser)));
+                            },
+                            title: Text(
+                              name,
+                              style: GoogleFonts.nunitoSans(
+                                  fontWeight: FontWeight.w700,fontSize: mediaQuery.width*.045 ),
+                            ),
+                            leading: CircleAvatar(
+                              radius: mediaQuery.width*.06,
+                              backgroundImage: NetworkImage(data["imageUrl"]),
+                            ),
+                            // subtitle: LastMessage(userId:data["userId"]),
+                          ),
+                          const Divider(
+                            height: 5,
+                            color: Colors.black12,
+                          )
+                        ],
                       );
                     });
               });

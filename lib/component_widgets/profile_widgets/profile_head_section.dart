@@ -40,6 +40,7 @@ class _ProfileHeadSectionState extends State<ProfileHeadSection> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CircleAvatar(
+                    backgroundColor: Colors.white,
                     backgroundImage: NetworkImage(selectedUser.imageUrl),
                     radius: mediaQuery.width * .09,
                   ),

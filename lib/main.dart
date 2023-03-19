@@ -1,5 +1,6 @@
 import 'package:buddies/provider/post_provider.dart';
 import 'package:buddies/provider/profile_provider.dart';
+import 'package:buddies/provider/story_provider.dart';
 import 'package:buddies/screens/auth/auth_pages.dart';
 import 'package:buddies/screens/auth/login_screen.dart';
 import 'package:buddies/screens/auth/signup_screen.dart';
@@ -28,7 +29,8 @@ class BuddiesApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<PostProvider>(create: (ctx) => PostProvider()),
         ChangeNotifierProvider<ProfileProvider>(
-            create: (ctx) => ProfileProvider())
+            create: (ctx) => ProfileProvider()),
+        ChangeNotifierProvider<StoryProvider>(create: (ctx)=>StoryProvider())
       ],
       child: MaterialApp(
         routes: {
