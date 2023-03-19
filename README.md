@@ -73,7 +73,8 @@ https://user-images.githubusercontent.com/85782209/226194547-385acd57-5f06-43b6-
 * Databasse - Firebase Firestore NoSQL Database
 * Authentication - Firebase Authentication
 * Media Storage - Firebase Storage
-* Custom backend functions - Firebase Cloud functions `https://github.com/NithinYesudas/Buddies_cloud_functions`
+* Custom backend functions - Firebase Cloud functions
+### `https://github.com/NithinYesudas/Buddies_cloud_functions`
 * State Management - Provider Package
 ## Installation
 
@@ -93,7 +94,7 @@ https://user-images.githubusercontent.com/85782209/226194547-385acd57-5f06-43b6-
 * Click "Email and Password" and enable it
 * From the left tabbar enable Firestore, Firebase Storage and Cloud functions
 * Install Firebase cli to deploy firebase cloud functions
-* The cloud functions used int this project is available in `https://github.com/NithinYesudas/Buddies_cloud_functions`
+* The cloud functions used int this project is available in https://github.com/NithinYesudas/Buddies_cloud_functions
 * Clone the above mentioned repo and deploy it using firebase cli
 * Create an app within your Firebase instance for Android, with package name com.yourcompany.news
 * Run the following command to get your SHA-1 key:
