@@ -100,9 +100,11 @@ class _LikesAndCommentWidgetState extends State<LikesAndCommentWidget> {
                   style: ButtonStyle(
                       padding: MaterialStateProperty.all(EdgeInsets.zero)),
                   child: Text(
-                    widget.post.commentsCount < 2
-                        ? "View ${widget.post.commentsCount} comment"
-                        : "View all ${widget.post.commentsCount} comments",
+                    widget.post.commentsCount == 0
+                        ? " "
+                        : widget.post.commentsCount < 2
+                            ? "View ${widget.post.commentsCount} comment"
+                            : "View all ${widget.post.commentsCount} comments",
                     style: GoogleFonts.nunitoSans(
                         fontWeight: FontWeight.w800,
                         color: CustomColors.lightAccent),

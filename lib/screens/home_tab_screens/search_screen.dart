@@ -22,6 +22,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
         title: TextField(
           decoration: InputDecoration(
               contentPadding:
@@ -84,13 +85,11 @@ class _SearchScreenState extends State<SearchScreen> {
                 leading: CircleAvatar(
                   backgroundImage: NetworkImage(imageUrl),
                 ),
-                title: Text(name),
+                title: Text(name,style: GoogleFonts.nunitoSans(fontWeight: FontWeight.w700),),
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                        builder: (ctx) =>
-                            ProfileScreen(
-
+                        builder: (ctx) => ProfileScreen(
                               userId: data['userId'],
                             )),
                   );
