@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AuthServices {
+
   static Future<bool> login(
       String email, String password, BuildContext ctx) async {
     // function for login
